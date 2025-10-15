@@ -1,5 +1,7 @@
 package com.etiya.customerservice.service.responses.address;
 
+import java.util.UUID;
+
 public class GetAddressResponse {
     private int id;
     private String street;
@@ -7,7 +9,7 @@ public class GetAddressResponse {
     private String description;
     private boolean isDefault;
     private int districtId;
-    private int customerId;
+    private UUID customerId;
     private String districtName;
     private String cityName;
     private String customerFirstName;
@@ -15,7 +17,7 @@ public class GetAddressResponse {
     public GetAddressResponse() {
     }
 
-    public GetAddressResponse(int id, String street, String houseNumber, String description, boolean isDefault, int districtId, int customerId, String districtName, String cityName, String customerFirstName) {
+    public GetAddressResponse(int id, String street, String houseNumber, String description, boolean isDefault, int districtId, UUID customerId, String districtName, String cityName, String customerFirstName) {
         this.id = id;
         this.street = street;
         this.houseNumber = houseNumber;
@@ -52,11 +54,11 @@ public class GetAddressResponse {
         this.districtName = districtName;
     }
 
-    public int getCustomerId() {
+    public UUID getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
     }
 

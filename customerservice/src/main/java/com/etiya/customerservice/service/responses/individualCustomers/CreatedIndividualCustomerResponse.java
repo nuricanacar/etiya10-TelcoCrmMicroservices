@@ -1,10 +1,11 @@
 package com.etiya.customerservice.service.responses.individualCustomers;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 public class CreatedIndividualCustomerResponse {
-    private int id;
+    private UUID id;
     private String firstName;
 
     private String lastName;
@@ -85,11 +86,11 @@ public class CreatedIndividualCustomerResponse {
         this.gender = gender;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 }

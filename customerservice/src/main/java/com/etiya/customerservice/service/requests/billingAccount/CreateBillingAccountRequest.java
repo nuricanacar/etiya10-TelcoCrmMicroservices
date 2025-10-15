@@ -3,6 +3,8 @@ package com.etiya.customerservice.service.requests.billingAccount;
 import com.etiya.customerservice.domain.enums.BillingAccountType;
 import jakarta.validation.constraints.*;
 
+import java.util.UUID;
+
 public class CreateBillingAccountRequest {
     @NotBlank(message = "Account name is required")
     @Size(min = 3,max = 100,message = "Account name must be between 3 and 100 characters")
@@ -14,7 +16,7 @@ public class CreateBillingAccountRequest {
 
     @NotNull(message = "CustomerId cannot be null")
     @Positive(message = "CustomerId must be a positive")
-    private int customerId;
+    private UUID customerId;
 
     @NotNull(message = "AddressId cannot be null")
     @Positive(message = "AddressId must be a positive")
@@ -36,11 +38,11 @@ public class CreateBillingAccountRequest {
         this.type = type;
     }
 
-    public int getCustomerId() {
+    public UUID getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
     }
 
@@ -52,7 +54,7 @@ public class CreateBillingAccountRequest {
         this.addressId = addressId;
     }
 
-    public CreateBillingAccountRequest(String accountName, BillingAccountType type, int customerId, int addressId) {
+    public CreateBillingAccountRequest(String accountName, BillingAccountType type, UUID customerId, int addressId) {
         this.accountName = accountName;
         this.type = type;
         this.customerId = customerId;

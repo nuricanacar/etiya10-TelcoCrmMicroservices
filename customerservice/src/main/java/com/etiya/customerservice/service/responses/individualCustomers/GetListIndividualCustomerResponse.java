@@ -4,9 +4,10 @@ import com.etiya.customerservice.service.responses.address.GetListAddressRespons
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class GetListIndividualCustomerResponse {
-    private int id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -21,7 +22,7 @@ public class GetListIndividualCustomerResponse {
     public GetListIndividualCustomerResponse() {
     }
 
-    public GetListIndividualCustomerResponse(int id, String firstName, String lastName, String middleName, String nationalId, String motherName, String fatherName, String gender, LocalDate dateOfBirth, List<GetListAddressResponse> addresses) {
+    public GetListIndividualCustomerResponse(UUID id, String firstName, String lastName, String middleName, String nationalId, String motherName, String fatherName, String gender, LocalDate dateOfBirth, List<GetListAddressResponse> addresses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,11 +35,11 @@ public class GetListIndividualCustomerResponse {
         this.addresses = addresses;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ContactMediumServiceImpl implements ContactMediumService {
@@ -101,7 +102,7 @@ public class ContactMediumServiceImpl implements ContactMediumService {
     }
 
     @Override
-    public List<GetListContactMediumResponse> getListByCustomerId(int customerId) {
+    public List<GetListContactMediumResponse> getListByCustomerId(UUID customerId) {
         List<ContactMedium> contactMediums = contactMediumRepository.findByCustomerId(customerId);
         List<GetListContactMediumResponse> responses = ContactMediumMapper.INSTANCE.getListContactMediumResponsesFromContactMedium(contactMediums);
         return responses;

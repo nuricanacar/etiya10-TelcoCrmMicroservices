@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/contactmediums")
@@ -71,7 +72,7 @@ public class ContactMediumController {
     }
     @GetMapping("{customerId}/customerId") // <-- BU KURAL KESİNLİKLE KALMALI
     @ResponseStatus(HttpStatus.OK)
-    public List<GetListContactMediumResponse> getListByCustomerId(@PathVariable int customerId) {
+    public List<GetListContactMediumResponse> getListByCustomerId(@PathVariable UUID customerId) {
         return contactMediumService.getListByCustomerId(customerId);
     }
 
