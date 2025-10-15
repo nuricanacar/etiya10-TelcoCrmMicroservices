@@ -1,5 +1,6 @@
 package com.etiya.customerservice.service.concretes;
 
+import com.etiya.common.events.CreateAddressEvent;
 import com.etiya.customerservice.domain.entities.Address;
 import com.etiya.customerservice.repository.AddressRepository;
 import com.etiya.customerservice.service.abstracts.AddressService;
@@ -11,6 +12,8 @@ import com.etiya.customerservice.service.responses.address.GetAddressResponse;
 import com.etiya.customerservice.service.responses.address.GetListAddressResponse;
 import com.etiya.customerservice.service.responses.address.UpdatedAddressResponse;
 import com.etiya.customerservice.service.rules.AddressBusinessRules;
+import com.etiya.customerservice.transport.kafka.producer.address.CreateAddressProducer;
+import com.etiya.customerservice.transport.kafka.producer.customer.CreateCustomerProducer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,16 +24,29 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final AddressBusinessRules addressBusinessRules;
+    private final CreateAddressProducer createAddressProducer;
 
-    public AddressServiceImpl(AddressRepository addressRepository, AddressBusinessRules addressBusinessRules, AddressBusinessRules addressBusinessRules1) {
+    public AddressServiceImpl(AddressRepository addressRepository, AddressBusinessRules addressBusinessRules, CreateAddressProducer createAddressProducer) {
         this.addressRepository = addressRepository;
-        this.addressBusinessRules = addressBusinessRules1;
+        this.addressBusinessRules = addressBusinessRules;
+        this.createAddressProducer = createAddressProducer;
     }
+
 
     @Override
     public CreatedAddressResponse add(CreateAddressRequest request) {
         Address address = AddressMapper.INSTANCE.addressFromCreateAddressRequest(request);
         Address createdAddress = addressRepository.save(address);
+        CreateAddressEvent event = new CreateAddressEvent(
+                createdAddress.getId(),
+                createdAddress.getStreet(),
+                createdAddress.getHouseNumber(),
+                createdAddress.getDescription(),
+                createdAddress.isDefault(),
+                createdAddress.getDistrict().getId(),
+                createdAddress.getCustomer().getId().toString()
+        );
+        createAddressProducer.produceAddressCreated(event);
         CreatedAddressResponse response = AddressMapper.INSTANCE.createdAddressResponseFromAddress(createdAddress);
         return response;
     }

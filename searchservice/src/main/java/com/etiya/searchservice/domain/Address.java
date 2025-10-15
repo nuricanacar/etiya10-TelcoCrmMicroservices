@@ -1,20 +1,34 @@
-package com.etiya.customerservice.service.requests.address;
+package com.etiya.searchservice.domain;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.util.UUID;
-
-public class CreateAddressRequest {
-    @NotBlank(message = "Street is required")
+public class Address {
+    private int id;
     private String street;
-    @NotBlank(message = "House number is required")
     private String houseNumber;
-    @Size(max = 255, message = "Description can't be longer than 255 characters")
     private String description;
     private boolean isDefault;
     private int districtId;
     private String customerId;
+
+    public Address() {
+    }
+
+    public Address(int id, String street, String houseNumber, String description, boolean isDefault, int districtId, String customerId) {
+        this.id = id;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.description = description;
+        this.isDefault = isDefault;
+        this.districtId = districtId;
+        this.customerId = customerId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getStreet() {
         return street;
@@ -62,17 +76,5 @@ public class CreateAddressRequest {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
-    }
-
-    public CreateAddressRequest(String street, String houseNumber, String description, boolean isDefault, int districtId, String customerId) {
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.description = description;
-        this.isDefault = isDefault;
-        this.districtId = districtId;
-        this.customerId = customerId;
-    }
-
-    public CreateAddressRequest() {
     }
 }

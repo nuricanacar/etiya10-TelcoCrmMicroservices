@@ -1,8 +1,13 @@
 package com.etiya.searchservice.domain;
 
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Document(indexName = "customersearch")
 public class CustomerSearch {
@@ -12,15 +17,21 @@ public class CustomerSearch {
     private String firstName;
     private String lastName;
     private String nationalId;
-    private LocalDateTime dateOfBirth;
+    private String dateOfBirth;
     private String fatherName;
     private String motherName;
     private String gender;
 
+    private List<Address> addresses = new ArrayList<>();
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     public CustomerSearch() {
     }
 
-    public CustomerSearch(String id, String customerNumber, String firstName, String lastName, String nationalId, LocalDateTime dateOfBirth, String fatherName, String motherName, String gender) {
+    public CustomerSearch(String id, String customerNumber, String firstName, String lastName, String nationalId, String dateOfBirth, String fatherName, String motherName, String gender) {
         this.id = id;
         this.customerNumber = customerNumber;
         this.firstName = firstName;
@@ -31,6 +42,11 @@ public class CustomerSearch {
         this.motherName = motherName;
         this.gender = gender;
     }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
 
     public String getId() {
         return id;
@@ -72,11 +88,11 @@ public class CustomerSearch {
         this.nationalId = nationalId;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
