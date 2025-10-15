@@ -2,19 +2,7 @@ version: '3.8'
 
 services:
  
-  customerservicedb:
-    container_name: customerservicedb
-    image: postgres
-    ports:
-      - "5450:5432"
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=customerdb
-    volumes:
-      - "customer-data:/var/lib/postgresql/data"
   
-
   #Birden fazla node (örneğin kafka) bir arada çalışırken yönetmek için kullanılır
 
   zookeeper:
@@ -25,8 +13,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000 # zookeeper heartbeat interval değeri. kafka ile senkronizasyon için
     ports:
       - "2181:2181"
- 
- 
+  
   kafka:
     image: confluentinc/cp-kafka:7.6.1
     container_name: kafka
@@ -51,6 +38,7 @@ services:
 
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
   
+
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
@@ -63,6 +51,49 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
       - KAFKA_CLUSTERS_0_READONLY=false
+  
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.2
+    container_name: kibana
+    depends_on:
+      - searchservicedb
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://searchservicedb:9200
+  
+
+  #Db Configuration
+
+  customerservicedb:
+    container_name: customerservicedb
+    image: postgres
+    ports:
+      - "5450:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=customerdb
+    volumes:
+      - "customer-data:/var/lib/postgresql/data"
+  
+  searchservicedb:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.2
+    container_name: searchservicedb
+    environment:
+      - discovery.type=single-node # tek node modunda çalıştır
+      - xpack.security.enabled=false # güvenlik kapalı
+      - ES_JAVA_OPTS=-Xms1g -Xms1g # java heap ayarları 
+    ports:
+      - "9200:9200" # Rest api portu
+      - "9300:9300" # cluster içi iletişim portu
+  
+
+    
+
+
+  
+  
 
 
 
