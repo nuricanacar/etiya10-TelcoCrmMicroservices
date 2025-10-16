@@ -1,9 +1,7 @@
 package com.etiya.searchservice.domain;
 
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,6 +10,7 @@ import java.util.List;
 @Document(indexName = "customersearch")
 public class CustomerSearch {
 
+    @Id
     private String id;
     private String customerNumber;
     private String firstName;
@@ -24,8 +23,18 @@ public class CustomerSearch {
 
     private List<Address> addresses = new ArrayList<>();
 
+    private List<ContactMedium> contactMediums= new ArrayList<>();
+
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<ContactMedium> getContactMediums() {
+        return contactMediums;
+    }
+
+    public void setContactMediums(List<ContactMedium> contactMediums) {
+        this.contactMediums = contactMediums;
     }
 
     public CustomerSearch() {

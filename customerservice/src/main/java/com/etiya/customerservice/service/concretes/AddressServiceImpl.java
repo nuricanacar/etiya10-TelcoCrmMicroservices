@@ -1,7 +1,8 @@
 package com.etiya.customerservice.service.concretes;
 
-import com.etiya.common.events.CreateAddressEvent;
-import com.etiya.common.events.UpdateAddressEvent;
+import com.etiya.common.events.address.CreateAddressEvent;
+import com.etiya.common.events.address.DeleteAddressEvent;
+import com.etiya.common.events.address.UpdateAddressEvent;
 import com.etiya.customerservice.domain.entities.Address;
 import com.etiya.customerservice.repository.AddressRepository;
 import com.etiya.customerservice.service.abstracts.AddressService;
@@ -14,8 +15,8 @@ import com.etiya.customerservice.service.responses.address.GetListAddressRespons
 import com.etiya.customerservice.service.responses.address.UpdatedAddressResponse;
 import com.etiya.customerservice.service.rules.AddressBusinessRules;
 import com.etiya.customerservice.transport.kafka.producer.address.CreateAddressProducer;
+import com.etiya.customerservice.transport.kafka.producer.address.DeleteAddressProducer;
 import com.etiya.customerservice.transport.kafka.producer.address.UpdateAddressProducer;
-import com.etiya.customerservice.transport.kafka.producer.customer.CreateCustomerProducer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,12 +29,14 @@ public class AddressServiceImpl implements AddressService {
     private final AddressBusinessRules addressBusinessRules;
     private final CreateAddressProducer createAddressProducer;
     private final UpdateAddressProducer updateAddressProducer;
+    private final DeleteAddressProducer deleteAddressProducer;
 
-    public AddressServiceImpl(AddressRepository addressRepository, AddressBusinessRules addressBusinessRules, CreateAddressProducer createAddressProducer, UpdateAddressProducer updateAddressProducer) {
+    public AddressServiceImpl(AddressRepository addressRepository, AddressBusinessRules addressBusinessRules, CreateAddressProducer createAddressProducer, UpdateAddressProducer updateAddressProducer, DeleteAddressProducer deleteAddressProducer) {
         this.addressRepository = addressRepository;
         this.addressBusinessRules = addressBusinessRules;
         this.createAddressProducer = createAddressProducer;
         this.updateAddressProducer = updateAddressProducer;
+        this.deleteAddressProducer = deleteAddressProducer;
     }
 
 
@@ -64,7 +67,10 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void delete(int id) {
         addressBusinessRules.checkIfBillingAccountExists(id);
+        Address address = addressRepository.getOne(id);
+        DeleteAddressEvent event = new DeleteAddressEvent(id,address.getCustomer().getId().toString());
         addressRepository.deleteById(id);
+        deleteAddressProducer.produceAddressDeleted(event);
     }
 
     @Override
@@ -77,20 +83,16 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public UpdatedAddressResponse update(UpdateAddressRequest request) {
         Address oldAddress = addressRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException("Address not found"));
-
         Address address =  AddressMapper.INSTANCE.addressFromUpdateAddressRequest(request,oldAddress);
         Address updatedAddress = addressRepository.save(address);
-        UpdateAddressEvent event = new UpdateAddressEvent(
-                updatedAddress.getId(),
+        UpdateAddressEvent event = new UpdateAddressEvent(updatedAddress.getId(),
                 updatedAddress.getStreet(),
                 updatedAddress.getHouseNumber(),
                 updatedAddress.getDescription(),
                 updatedAddress.isDefault(),
                 updatedAddress.getDistrict().getId(),
-                updatedAddress.getCustomer().getId().toString()
-        );
+                updatedAddress.getCustomer().getId().toString());
         updateAddressProducer.produceAddressUpdated(event);
-
         UpdatedAddressResponse response = AddressMapper.INSTANCE.updatedAddressResponseFromAddress(updatedAddress);
         return response;
     }

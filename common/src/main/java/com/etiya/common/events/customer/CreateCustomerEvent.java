@@ -1,7 +1,4 @@
-package com.etiya.common.events;
-
-import java.time.LocalDateTime;
-import java.util.List;
+package com.etiya.common.events.customer;
 
 public record CreateCustomerEvent(String customerId, String customerNumber, String firstName, String lastName, String nationalId,
                                   String dateOfBirth, String motherName, String fatherName, String gender ) {

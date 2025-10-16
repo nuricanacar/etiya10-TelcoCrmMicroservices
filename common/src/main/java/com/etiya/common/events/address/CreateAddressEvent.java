@@ -1,4 +1,4 @@
-package com.etiya.common.events;
+package com.etiya.common.events.address;
 
 public record CreateAddressEvent(int addressId,
                                  String street, String houseNumber,  String description,

@@ -1,5 +1,8 @@
 package com.etiya.customerservice.service.concretes;
 
+import com.etiya.common.events.contactMedium.CreateContactMediumEvent;
+import com.etiya.common.events.contactMedium.DeleteContactMediumEvent;
+import com.etiya.common.events.contactMedium.UpdateContactMediumEvent;
 import com.etiya.customerservice.domain.entities.ContactMedium;
 import com.etiya.customerservice.repository.ContactMediumRepository;
 import com.etiya.customerservice.service.abstracts.ContactMediumService;
@@ -12,6 +15,9 @@ import com.etiya.customerservice.service.responses.contactMedium.GetContactMediu
 import com.etiya.customerservice.service.responses.contactMedium.GetListContactMediumResponse;
 import com.etiya.customerservice.service.responses.contactMedium.UpdatedContactMediumResponse;
 import com.etiya.customerservice.service.rules.ContactMediumBusinessRules;
+import com.etiya.customerservice.transport.kafka.producer.contactMedium.CreateContactMediumProducer;
+import com.etiya.customerservice.transport.kafka.producer.contactMedium.DeleteContactMediumProducer;
+import com.etiya.customerservice.transport.kafka.producer.contactMedium.UpdateContactMediumProducer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,12 +30,19 @@ public class ContactMediumServiceImpl implements ContactMediumService {
     private final ContactMediumRepository contactMediumRepository;
     private final ContactMediumBusinessRules contactMediumBusinessRules;
     private final CustomerService customerService;
+    private final CreateContactMediumProducer createContactMediumProducer;
+    private final UpdateContactMediumProducer updateContactMediumProducer;
+    private final DeleteContactMediumProducer deleteContactMediumProducer;
 
-    public ContactMediumServiceImpl(ContactMediumRepository contactMediumRepository, ContactMediumBusinessRules contactMediumBusinessRules, CustomerService customerService) {
+    public ContactMediumServiceImpl(ContactMediumRepository contactMediumRepository, ContactMediumBusinessRules contactMediumBusinessRules, CustomerService customerService, CreateContactMediumProducer createContactMediumProducer, UpdateContactMediumProducer updateContactMediumProducer, DeleteContactMediumProducer deleteContactMediumProducer) {
         this.contactMediumRepository = contactMediumRepository;
         this.contactMediumBusinessRules = contactMediumBusinessRules;
         this.customerService = customerService;
+        this.createContactMediumProducer = createContactMediumProducer;
+        this.updateContactMediumProducer = updateContactMediumProducer;
+        this.deleteContactMediumProducer = deleteContactMediumProducer;
     }
+
 
     @Override
     public CreatedContactMediumResponse add(CreateContactMediumRequest request) {
@@ -37,6 +50,14 @@ public class ContactMediumServiceImpl implements ContactMediumService {
         contactMediumBusinessRules.checkIsPrimaryOnlyOne(contactMedium);
         customerService.existsById(request.getCustomerId());
         ContactMedium created =  contactMediumRepository.save(contactMedium);
+        CreateContactMediumEvent event = new CreateContactMediumEvent(
+                created.getId(),
+                created.getType().name(),
+                created.getValue(),
+                created.isPrimary(),
+                created.getCustomer().getId()
+        );
+        createContactMediumProducer.produceContactMediumCreated(event);
         CreatedContactMediumResponse response = ContactMediumMapper.INSTANCE.getCreatedContactMediumResponseFromContactMedium(created);
         return response;
     }
@@ -47,7 +68,14 @@ public class ContactMediumServiceImpl implements ContactMediumService {
 
         ContactMedium contactMedium = ContactMediumMapper.INSTANCE.contactMediumFromUpdateContactMediumRequest(request, contactMediumOld);
         ContactMedium updated = contactMediumRepository.save(contactMedium);
-
+        UpdateContactMediumEvent event = new UpdateContactMediumEvent(
+                updated.getId(),
+                updated.getType().name(),
+                updated.getValue(),
+                updated.isPrimary(),
+                updated.getCustomer().getId()
+        );
+        updateContactMediumProducer.produceContactMediumUpdated(event);
         UpdatedContactMediumResponse response = ContactMediumMapper.INSTANCE.getUpdatedContactMediumResponseFromContactMedium(updated);
 
         return response;
@@ -66,7 +94,9 @@ public class ContactMediumServiceImpl implements ContactMediumService {
     public void delete(int id) {
         ContactMedium contactMedium = contactMediumRepository.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
         contactMediumBusinessRules.checkIsPrimary(contactMedium);
+        DeleteContactMediumEvent event = new DeleteContactMediumEvent(id,contactMedium.getCustomer().getId());
         contactMediumRepository.delete(contactMedium);
+        deleteContactMediumProducer.produceContactMediumDeleted(event);
     }
 
     @Override
