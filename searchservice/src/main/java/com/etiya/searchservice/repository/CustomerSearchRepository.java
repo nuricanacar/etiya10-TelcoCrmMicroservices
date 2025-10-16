@@ -21,4 +21,36 @@ public interface CustomerSearchRepository extends ElasticsearchRepository<Custom
             
             """)
     List<CustomerSearch> searchAllFields(String keyword);
+
+    @Query("""
+            {
+              "match": {
+                "firstName": "?0"
+              }
+            }
+            """)
+    List<CustomerSearch> findByFirstNameUsingMatch(String firstName);
+
+    @Query("""
+            {
+                "term": {
+                    "nationalId.keyword": {
+                      "value": "?0"
+                    }
+                }
+            }
+            """)
+    List<CustomerSearch> findByNationalId(String natId);
+
+    @Query("""
+            {
+              "fuzzy": {
+                "firstName": {
+                  "value": "?0",
+                  "fuzziness": "AUTO"
+                }
+              }
+            }
+            """)
+    List<CustomerSearch> findByFirstNameUsingFuzzy(String misspelledFirstName);
 }

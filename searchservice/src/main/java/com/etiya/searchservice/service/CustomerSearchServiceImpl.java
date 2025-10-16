@@ -149,4 +149,19 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     public List<CustomerSearch> searchAllFields(String keyword) {
         return customerSearchRepository.searchAllFields(keyword);
     }
+
+    @Override
+    public List<CustomerSearch> findByFirstNameUsingMatch(String firstName) {
+        return customerSearchRepository.findByFirstNameUsingMatch(firstName);
+    }
+
+    @Override
+    public List<CustomerSearch> findByNationalId(String nationalId) {
+        return customerSearchRepository.findByNationalId(nationalId);
+    }
+
+    @Override
+    public List<CustomerSearch> findByFirstNameUsingFuzzy(String misspelledFirstName) {
+        return customerSearchRepository.findByFirstNameUsingFuzzy(misspelledFirstName);
+    }
 }

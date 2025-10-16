@@ -34,4 +34,23 @@ public class CustomerSearchController {
     public List<CustomerSearch> search(@RequestParam String keyword) {
         return customerSearchService.searchAllFields(keyword);
     }
+    @GetMapping("firstName")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CustomerSearch> searchByFirstName(@RequestParam String firstName) {
+        return customerSearchService.findByFirstNameUsingMatch(firstName);
+    }
+
+    @GetMapping("natId")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CustomerSearch> searchByNatId(@RequestParam String natId) {
+        return customerSearchService.findByNationalId(natId);
+    }
+
+    @GetMapping("misspelledFirstName")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CustomerSearch> searchByMisspelledFirstName(@RequestParam String misspelledFirstName) {
+        return customerSearchService.findByFirstNameUsingFuzzy(misspelledFirstName);
+    }
+
+
 }

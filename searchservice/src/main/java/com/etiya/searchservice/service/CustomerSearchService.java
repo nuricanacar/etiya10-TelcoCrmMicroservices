@@ -16,5 +16,9 @@ public interface CustomerSearchService {
     void updateContactMedium(ContactMedium contactMedium, String customerId);
     void deleteContactMedium(int id, String customerId);
     List<CustomerSearch> searchAllFields(String keyword);
+    List<CustomerSearch> findByFirstNameUsingMatch(String firstName);
+    List<CustomerSearch> findByNationalId(String nationalId);
+    List<CustomerSearch> findByFirstNameUsingFuzzy(String misspelledFirstName);
+
 
 }
