@@ -25,7 +25,7 @@ public class CreatedCustomerConsumer {
         CustomerSearch customerSearch = new CustomerSearch(event.customerId(),
                 event.customerNumber(),
                 event.firstName(),
-                event.lastName(), event.nationalId(), event.dateOfBirth().toString(), event.fatherName(), event.fatherName(), event.gender());
+                event.lastName(), event.nationalId(), event.dateOfBirth(), event.fatherName(), event.fatherName(), event.gender());
     customerSearchService.add(customerSearch);
     }
 

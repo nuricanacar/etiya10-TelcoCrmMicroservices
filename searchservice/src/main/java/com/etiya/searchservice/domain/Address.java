@@ -1,33 +1,32 @@
 package com.etiya.searchservice.domain;
 
 public class Address {
-    private int id;
+    private int addressId;
     private String street;
     private String houseNumber;
     private String description;
     private boolean isDefault;
     private int districtId;
-    private String customerId;
+
 
     public Address() {
     }
 
-    public Address(int id, String street, String houseNumber, String description, boolean isDefault, int districtId, String customerId) {
-        this.id = id;
+    public Address(int id, String street, String houseNumber, String description, boolean isDefault, int districtId) {
+        this.addressId = id;
         this.street = street;
         this.houseNumber = houseNumber;
         this.description = description;
         this.isDefault = isDefault;
         this.districtId = districtId;
-        this.customerId = customerId;
     }
 
     public int getId() {
-        return id;
+        return addressId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.addressId = id;
     }
 
     public String getStreet() {
@@ -70,11 +69,5 @@ public class Address {
         this.districtId = districtId;
     }
 
-    public String getCustomerId() {
-        return customerId;
-    }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
 }

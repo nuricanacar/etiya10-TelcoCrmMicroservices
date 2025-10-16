@@ -6,5 +6,6 @@ import com.etiya.searchservice.domain.CustomerSearch;
 public interface CustomerSearchService {
 
     void add(CustomerSearch customerSearch);
-    void addAddress(Address address);
+    void addAddress(Address address, String customerId);
+    void updateAddress(Address address, String customerId);
 }

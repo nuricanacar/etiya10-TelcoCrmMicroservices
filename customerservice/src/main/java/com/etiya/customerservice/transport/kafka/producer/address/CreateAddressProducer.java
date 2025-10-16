@@ -24,7 +24,7 @@ public class CreateAddressProducer {
         LOGGER.info(String.format("Address created event => %s",event.addressId()));
 
         Message<CreateAddressEvent> message = MessageBuilder.withPayload(event)
-                .setHeader(KafkaHeaders.TOPIC,"create-address").build();
+                .setHeader(KafkaHeaders.TOPIC,"create-address1").build();
         kafkaTemplate.send(message);
     }
 }
