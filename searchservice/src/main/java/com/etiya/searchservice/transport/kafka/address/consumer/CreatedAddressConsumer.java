@@ -32,8 +32,10 @@ public class CreatedAddressConsumer {
                     event.description(),
                     event.street(),
                     event.isDefault(),
-                    event.districtId());
-            customerSearchService.addAddress(address, event.customerId());
+                    event.districtId(),
+                    event.customerId()
+            );
+            customerSearchService.addAddress(address);
             LOGGER.info(String.format("Consumed Customer => %s", event.addressId()));
         };
     }

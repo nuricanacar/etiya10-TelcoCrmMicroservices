@@ -2,6 +2,7 @@ package com.etiya.searchservice.transport.kafka.contactMedium.consumer;
 
 import com.etiya.common.events.address.DeleteAddressEvent;
 import com.etiya.common.events.contactMedium.DeleteContactMediumEvent;
+import com.etiya.searchservice.domain.ContactMedium;
 import com.etiya.searchservice.service.CustomerSearchService;
 import com.etiya.searchservice.transport.kafka.address.consumer.DeletedAddressConsumer;
 import org.slf4j.Logger;
@@ -24,7 +25,11 @@ public class DeletedContactMediumConsumer {
     @Bean
     public Consumer<DeleteContactMediumEvent> contactmediumDeleted(){
         return event -> {
-            customerSearchService.deleteContactMedium(event.id(), event.customerId().toString());
+            ContactMedium contactMedium = new ContactMedium(
+                    event.id(),
+                    event.customerId().toString()
+            );
+            customerSearchService.deleteContactMedium(contactMedium);
             LOGGER.info(String.format("Deleted Customer => %s", event.id()));
         };
     }

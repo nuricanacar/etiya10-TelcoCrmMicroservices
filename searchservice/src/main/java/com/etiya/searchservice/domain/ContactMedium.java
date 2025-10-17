@@ -6,6 +6,15 @@ public class ContactMedium {
     private String type;
     private String value;
     private boolean isPrimary;
+    private String customerId;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public int getId() {
         return id;
@@ -40,11 +49,17 @@ public class ContactMedium {
     }
 
 
-    public ContactMedium(int id, String type, String value, boolean isPrimary) {
+    public ContactMedium(int id, String type, String value, boolean isPrimary, String customerId) {
         this.id = id;
         this.type = type;
         this.value = value;
         this.isPrimary = isPrimary;
+        this.customerId = customerId;
+    }
+
+    public ContactMedium(int id, String customerId) {
+        this.id = id;
+        this.customerId = customerId;
     }
 
     public ContactMedium() {

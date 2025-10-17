@@ -7,18 +7,33 @@ public class Address {
     private String description;
     private boolean isDefault;
     private int districtId;
+    private String customerId;
 
 
     public Address() {
     }
 
-    public Address(int id, String street, String houseNumber, String description, boolean isDefault, int districtId) {
-        this.addressId = id;
+    public Address(int addressId, String street, String houseNumber, String description, boolean isDefault, int districtId, String customerId) {
+        this.addressId = addressId;
         this.street = street;
         this.houseNumber = houseNumber;
         this.description = description;
         this.isDefault = isDefault;
         this.districtId = districtId;
+        this.customerId = customerId;
+    }
+
+    public Address(int addressId, String customerId) {
+        this.addressId = addressId;
+        this.customerId = customerId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public int getId() {

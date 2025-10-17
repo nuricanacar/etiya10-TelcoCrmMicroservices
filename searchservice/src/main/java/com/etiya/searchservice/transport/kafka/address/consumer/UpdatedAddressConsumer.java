@@ -30,9 +30,11 @@ public class UpdatedAddressConsumer {
                     event.description(),
                     event.street(),
                     event.isDefault(),
-                    event.districtId()
+                    event.districtId(),
+                    event.customerId()
+
             );
-            customerSearchService.updateAddress(address, event.customerId());
+            customerSearchService.updateAddress(address);
             LOGGER.info(String.format("Updated Address => %s", event.addressId()));
         };
     }

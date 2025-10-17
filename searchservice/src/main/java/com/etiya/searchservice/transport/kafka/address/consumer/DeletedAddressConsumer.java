@@ -23,7 +23,11 @@ public class DeletedAddressConsumer {
     @Bean
     public Consumer<DeleteAddressEvent> addressDeleted(){
         return event -> {
-            customerSearchService.deleteAddress(event.addressId(), event.customerId());
+            Address address = new Address(
+                    event.addressId(),
+                    event.customerId()
+            );
+            customerSearchService.deleteAddress(address);
             LOGGER.info(String.format("Deleted Customer => %s", event.addressId()));
         };
     }

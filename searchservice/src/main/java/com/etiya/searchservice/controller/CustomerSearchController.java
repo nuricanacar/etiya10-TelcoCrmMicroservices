@@ -52,5 +52,11 @@ public class CustomerSearchController {
         return customerSearchService.findByFirstNameUsingFuzzy(misspelledFirstName);
     }
 
+    @GetMapping("smartquery")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CustomerSearch> searchBySmartQuery(@RequestParam String userInput) {
+        return customerSearchService.searchWithSmartQuery(userInput);
+    }
+
 
 }

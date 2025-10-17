@@ -25,8 +25,8 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     }
 
     @Override
-    public void addAddress(Address address, String customerId) {
-        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(customerId);
+    public void addAddress(Address address) {
+        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(address.getCustomerId());
         if(customerOpt.isPresent()){
             CustomerSearch customer = customerOpt.get();
             customer.getAddresses().add(address);
@@ -35,9 +35,9 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     }
 
     @Override
-    public void updateAddress(Address address, String customerId) {
+    public void updateAddress(Address address) {
         // Find the customer by ID
-        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(customerId);
+        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(address.getCustomerId());
 
         if (customerOpt.isPresent()) {
             CustomerSearch customer = customerOpt.get();
@@ -67,14 +67,14 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     }
 
     @Override
-    public void deleteAddress(int addressId, String customerId) {
-        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(customerId);
+    public void deleteAddress(Address address) {
+        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(address.getCustomerId());
 
         if (customerOpt.isPresent()) {
             CustomerSearch customer = customerOpt.get();
 
             // Find the existing address by its ID or some unique identifier (e.g., houseNumber, street)
-            boolean addressRemoved = customer.getAddresses().removeIf(addr -> addr.getId() == addressId);
+            boolean addressRemoved = customer.getAddresses().removeIf(addr -> addr.getId() == address.getId());
 
             if (addressRemoved) {
                 // Save the updated customer after address removal
@@ -88,8 +88,8 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     }
 
     @Override
-    public void addContactMedium(ContactMedium contactMedium, String customerId) {
-        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(customerId.toString());
+    public void addContactMedium(ContactMedium contactMedium) {
+        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(contactMedium.getCustomerId().toString());
         if(customerOpt.isPresent()) {
             CustomerSearch customer = customerOpt.get();
             customer.getContactMediums().add(contactMedium);
@@ -98,8 +98,8 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     }
 
     @Override
-    public void updateContactMedium(ContactMedium contactMedium, String customerId) {
-        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(customerId.toString());
+    public void updateContactMedium(ContactMedium contactMedium) {
+        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(contactMedium.getCustomerId().toString());
 
         if (customerOpt.isPresent()) {
             CustomerSearch customer = customerOpt.get();
@@ -125,14 +125,14 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     }
 
     @Override
-    public void deleteContactMedium(int id, String customerId) {
-        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(customerId);
+    public void deleteContactMedium(ContactMedium contactMedium) {
+        Optional<CustomerSearch> customerOpt = customerSearchRepository.findById(contactMedium.getCustomerId().toString());
 
         if (customerOpt.isPresent()) {
             CustomerSearch customer = customerOpt.get();
 
             // Find the existing address by its ID or some unique identifier (e.g., houseNumber, street)
-            boolean contactMediumRemoved = customer.getContactMediums().removeIf(cm -> cm.getId() == id);
+            boolean contactMediumRemoved = customer.getContactMediums().removeIf(cm -> cm.getId() == contactMedium.getId());
 
             if (contactMediumRemoved) {
                 // Save the updated customer after address removal
@@ -163,5 +163,10 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     @Override
     public List<CustomerSearch> findByFirstNameUsingFuzzy(String misspelledFirstName) {
         return customerSearchRepository.findByFirstNameUsingFuzzy(misspelledFirstName);
+    }
+
+    @Override
+    public List<CustomerSearch> searchWithSmartQuery(String userInput) {
+        return customerSearchRepository.searchWithSmartQuery(userInput);
     }
 }

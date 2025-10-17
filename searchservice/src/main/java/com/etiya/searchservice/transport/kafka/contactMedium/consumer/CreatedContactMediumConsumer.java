@@ -30,9 +30,10 @@ public class CreatedContactMediumConsumer {
                     event.id(),
                     event.type(),
                     event.value(),
-                    event.isPrimary()
+                    event.isPrimary(),
+                    event.customerId().toString()
             );
-            customerSearchService.addContactMedium(contactMedium, event.customerId().toString());
+            customerSearchService.addContactMedium(contactMedium);
             LOGGER.info(String.format("Created contact medium => %s", event.id()));
         };
     }

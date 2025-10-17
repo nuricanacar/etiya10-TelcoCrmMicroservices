@@ -29,9 +29,10 @@ public class UpdatedContactMediumConsumer {
                     event.id(),
                     event.type(),
                     event.value(),
-                    event.isPrimary()
+                    event.isPrimary(),
+                    event.customerId().toString()
             );
-            customerSearchService.updateContactMedium(contactMedium, event.customerId().toString());
+            customerSearchService.updateContactMedium(contactMedium);
             LOGGER.info(String.format("Updated Contact Medium => %s", event.id()));
         };
     }
