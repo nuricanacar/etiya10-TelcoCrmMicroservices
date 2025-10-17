@@ -14,4 +14,5 @@ public class Messages {
     public static final String CustomerTypeMatchesAccountType =  "customerTypeMatchesAccountType";
     public static final String CustomerHasAddress =  "customerHasAddress";
     public static final String BillingAccountExists =  "billingAccountExists";
+    public static final String StreetRequired= "streetRequired";
 }

@@ -17,4 +17,8 @@ public class LocalizationServiceImpl implements LocalizationService {
     public String getMessage(String key) {
         return messageSource.getMessage(key,null, LocaleContextHolder.getLocale());
     }
+
+
+
+
 }

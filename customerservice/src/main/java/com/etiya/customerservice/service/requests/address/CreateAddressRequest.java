@@ -1,12 +1,20 @@
 package com.etiya.customerservice.service.requests.address;
 
+import com.etiya.common.localization.LocalizationService;
+import com.etiya.customerservice.service.messages.Messages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.context.MessageSource;
 
 import java.util.UUID;
 
+import static com.etiya.customerservice.service.messages.Messages.StreetRequired;
+
 public class CreateAddressRequest {
-    @NotBlank(message = "Street is required")
+
+    //@LocalizedNotBlank(message = "address.street.required")
+    @NotBlank(message = Messages.StreetRequired)
+    //@NotBlank(message = "{streetRequired}")
     private String street;
     @NotBlank(message = "House number is required")
     private String houseNumber;
@@ -15,6 +23,16 @@ public class CreateAddressRequest {
     private boolean isDefault;
     private int districtId;
     private String customerId;
+
+    public CreateAddressRequest(String street, String houseNumber, String description, boolean isDefault, int districtId, String customerId) {
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.description = description;
+        this.isDefault = isDefault;
+        this.districtId = districtId;
+        this.customerId = customerId;
+
+    }
 
     public String getStreet() {
         return street;
@@ -64,15 +82,5 @@ public class CreateAddressRequest {
         this.customerId = customerId;
     }
 
-    public CreateAddressRequest(String street, String houseNumber, String description, boolean isDefault, int districtId, String customerId) {
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.description = description;
-        this.isDefault = isDefault;
-        this.districtId = districtId;
-        this.customerId = customerId;
-    }
 
-    public CreateAddressRequest() {
-    }
 }
