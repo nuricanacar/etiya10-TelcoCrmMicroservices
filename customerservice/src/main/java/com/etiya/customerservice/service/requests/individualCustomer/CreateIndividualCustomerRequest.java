@@ -1,5 +1,6 @@
 package com.etiya.customerservice.service.requests.individualCustomer;
 
+import com.etiya.customerservice.service.messages.Messages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -9,17 +10,17 @@ import java.time.LocalDateTime;
 
 public class CreateIndividualCustomerRequest {
 
-    @NotBlank(message = "Firstname is required")
-    @Size(min = 2,max = 50,message = "FirstName must be between 2 and 50 characters")
+    @NotBlank(message = Messages.FirstNameRequired)
+    @Size(min = 2,max = 50,message = Messages.FirstNameSize)
     private String firstName;
 
     private String lastName;
 
     private String middleName;
 
-    @NotBlank(message = "Identity number is required")
-    @Size(min = 11,max = 11,message = "Identity number must be 11 characters")
-    @Pattern(regexp = "^[0-9]+$",message = "Identity number must contain only numbers")
+    @NotBlank(message = Messages.NatIdRequired)
+    @Size(min = 11,max = 11,message = Messages.NatIdSize)
+    @Pattern(regexp = "^[0-9]+$",message = Messages.NatIdPattern)
     private String nationalId;
 
     private LocalDateTime dateOfBirth;

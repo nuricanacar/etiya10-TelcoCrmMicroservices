@@ -1,6 +1,5 @@
 package com.etiya.common.configuration;
 
-import org.apache.tomcat.util.descriptor.LocalResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +39,21 @@ public class LocalizationConfiguration {
         bean.setValidationMessageSource(bundleMessageSource());
         return bean;
     }
-
+    // 4. Doğru yapılandırılmış Validator bean'i
+//    @Bean
+//    @Primary
+//    public LocalValidatorFactoryBean localValidatorFactoryBean(LocalizedMessageInterpolator interpolator) {
+//        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+//
+//        // Hem mesaj kaynağını hem de custom interpolator'ı aynı bean'e set ediyoruz.
+//        // Aslında interpolator zaten messageSource'u içinde barındırdığı için
+//        // sadece interpolator'ı set etmek yeterlidir. Spring gerisini halleder.
+//        // bean.setValidationMessageSource(bundleMessageSource());
+//
+//        bean.setMessageInterpolator(interpolator);
+//
+//        return bean;
+//    }
 
 
 }

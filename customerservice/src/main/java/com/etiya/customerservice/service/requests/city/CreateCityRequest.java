@@ -1,11 +1,12 @@
 package com.etiya.customerservice.service.requests.city;
 
+import com.etiya.customerservice.service.messages.Messages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class CreateCityRequest {
-    @NotBlank(message = "Name is required")
-    @Pattern(regexp = "^[a-zA-ZçÇşŞğĞıİüÜöÖ]+", message = "Name must contain only letters.")
+    @NotBlank(message = Messages.CityNameRequired)
+    @Pattern(regexp = "^[a-zA-ZçÇşŞğĞıİüÜöÖ]+", message = Messages.CityNamePattern)
     private String name;
 
     public String getName() {

@@ -1,15 +1,16 @@
 package com.etiya.customerservice.service.requests.address;
 
+import com.etiya.customerservice.service.messages.Messages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UpdateAddressRequest {
     private int id;
-    @NotBlank(message = "Street is required")
+    @NotBlank(message = Messages.StreetRequired)
     private String street;
-    @NotBlank(message = "House number is required")
+    @NotBlank(message = Messages.HouseNumberRequired)
     private String houseNumber;
-    @Size(max = 255, message = "Description can't be longer than 255 characters")
+    @Size(max = 255, message = Messages.DescriptionSize)
     private String description;
     private Boolean isDefault;
     private int districtId;

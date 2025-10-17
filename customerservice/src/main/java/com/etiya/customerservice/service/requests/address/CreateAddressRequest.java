@@ -12,13 +12,16 @@ import static com.etiya.customerservice.service.messages.Messages.StreetRequired
 
 public class CreateAddressRequest {
 
+
+
+
     //@LocalizedNotBlank(message = "address.street.required")
     @NotBlank(message = Messages.StreetRequired)
     //@NotBlank(message = "{streetRequired}")
     private String street;
-    @NotBlank(message = "House number is required")
+    @NotBlank(message = Messages.HouseNumberRequired)
     private String houseNumber;
-    @Size(max = 255, message = "Description can't be longer than 255 characters")
+    @Size(max = 255, message = Messages.DescriptionSize)
     private String description;
     private boolean isDefault;
     private int districtId;

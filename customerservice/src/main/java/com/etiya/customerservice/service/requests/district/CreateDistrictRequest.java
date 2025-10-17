@@ -1,17 +1,17 @@
 package com.etiya.customerservice.service.requests.district;
 
+import com.etiya.customerservice.service.messages.Messages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public class CreateDistrictRequest {
-    @NotBlank(message = "Name is required")
-    @Size(max = 255, message = "Description can't be longer than 255 characters")
+    @NotBlank(message = Messages.DistrictNameRequired)
+    @Size(max = 255, message = Messages.DistrictSize)
     private String name;
 
-    @NotNull(message = "CityId is required")
-    @Positive(message = "CityId must be positive")
+    @NotNull(message = Messages.CityIdRequired)
     private Integer cityId;
 
     public String getName() {

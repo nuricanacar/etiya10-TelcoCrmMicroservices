@@ -1,25 +1,24 @@
 package com.etiya.customerservice.service.requests.billingAccount;
 
 import com.etiya.customerservice.domain.enums.BillingAccountType;
+import com.etiya.customerservice.service.messages.Messages;
 import jakarta.validation.constraints.*;
 
 import java.util.UUID;
 
 public class CreateBillingAccountRequest {
-    @NotBlank(message = "Account name is required")
-    @Size(min = 3,max = 100,message = "Account name must be between 3 and 100 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9şıüğöçŞİÜĞÖÇ -]+$", message = "Account name can only contain letters, numbers, spaces, and hyphens")
+    @NotBlank(message = Messages.AccountNameRequired)
+    @Size(min = 3,max = 100,message = Messages.AccountNameSize)
+    @Pattern(regexp = "^[a-zA-Z0-9şıüğöçŞİÜĞÖÇ -]+$", message = Messages.AccountNamePattern)
     private String accountName;
 
-    @NotNull(message = "Account Type is required")
+    @NotNull(message = Messages.BillingAccountTypeRequired)
     private BillingAccountType type;
 
-    @NotNull(message = "CustomerId cannot be null")
-    @Positive(message = "CustomerId must be a positive")
+    @NotNull(message = Messages.CustomerIdRequired)
     private UUID customerId;
 
-    @NotNull(message = "AddressId cannot be null")
-    @Positive(message = "AddressId must be a positive")
+    @NotNull(message = Messages.AddressIdRequired)
     private int addressId;
 
     public String getAccountName() {
