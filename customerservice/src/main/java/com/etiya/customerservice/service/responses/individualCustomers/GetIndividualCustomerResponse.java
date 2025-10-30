@@ -13,7 +13,7 @@ public class GetIndividualCustomerResponse {
     private String motherName;
     private String fatherName;
     private String gender;
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     public UUID getId() {
         return id;
@@ -79,15 +79,15 @@ public class GetIndividualCustomerResponse {
         this.gender = gender;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public GetIndividualCustomerResponse(UUID id, String firstName, String lastName, String middleName, String nationalId, String motherName, String fatherName, String gender, LocalDate dateOfBirth) {
+    public GetIndividualCustomerResponse(UUID id, String firstName, String lastName, String middleName, String nationalId, String motherName, String fatherName, String gender, String dateOfBirth) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

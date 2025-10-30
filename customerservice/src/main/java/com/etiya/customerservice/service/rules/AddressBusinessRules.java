@@ -7,6 +7,9 @@ import com.etiya.customerservice.repository.AddressRepository;
 import com.etiya.customerservice.service.messages.Messages;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class AddressBusinessRules {
     private final AddressRepository addressRepository;
@@ -22,6 +25,18 @@ public class AddressBusinessRules {
 //            throw new BusinessException("Address with id " + id + " doesnt exists");
 //        }
 //    }
+
+    public void checkIsPrimaryOnlyOne(Address address) {
+        if (address.isDefault()) {
+            UUID ownerCustomerId = address.getCustomer().getId();
+            List<Address> addressList = addressRepository.findByCustomerId(ownerCustomerId);
+            if (!addressList.isEmpty()) {
+                for (Address a : addressList) {
+                    a.setDefault(false);
+                }
+            }
+        }
+    }
 
     public void checkIfBillingAccountExists(int id) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new BusinessException(localizationService.getMessage(Messages.IdExists)));

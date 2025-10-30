@@ -23,7 +23,7 @@ public class CreateIndividualCustomerRequest {
     @Pattern(regexp = "^[0-9]+$",message = Messages.NatIdPattern)
     private String nationalId;
 
-    private LocalDateTime dateOfBirth;
+    private String dateOfBirth;
 
     private String motherName;
 
@@ -63,11 +63,11 @@ public class CreateIndividualCustomerRequest {
         this.nationalId = nationalId;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -95,7 +95,7 @@ public class CreateIndividualCustomerRequest {
         this.gender = gender;
     }
 
-    public CreateIndividualCustomerRequest(String firstName, String lastName, String middleName, String nationalId, LocalDateTime dateOfBirth, String motherName, String fatherName, String gender) {
+    public CreateIndividualCustomerRequest(String firstName, String lastName, String middleName, String nationalId, String dateOfBirth, String motherName, String fatherName, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;

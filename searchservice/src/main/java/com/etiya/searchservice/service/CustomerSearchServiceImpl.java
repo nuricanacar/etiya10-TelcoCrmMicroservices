@@ -169,4 +169,10 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
     public List<CustomerSearch> searchWithSmartQuery(String userInput) {
         return customerSearchRepository.searchWithSmartQuery(userInput);
     }
+
+    @Override
+    public CustomerSearch searchByCustomerId(String customerId) {
+        return customerSearchRepository.searchByCustomerId(customerId);
+    }
+
 }

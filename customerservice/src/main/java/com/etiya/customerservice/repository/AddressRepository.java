@@ -27,4 +27,8 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
     void deleteById(int id);
 
     boolean existsByCustomerId(UUID customerId);
+
+    List<Address> findByCustomerId(UUID id);
+
+
 }

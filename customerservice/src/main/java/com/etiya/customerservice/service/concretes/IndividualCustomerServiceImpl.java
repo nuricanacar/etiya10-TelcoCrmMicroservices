@@ -40,7 +40,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
                         createdIndividualCustomer.getFirstName(),
                         createdIndividualCustomer.getLastName(),
                         createdIndividualCustomer.getNationalId(),
-                        createdIndividualCustomer.getDateOfBirth().toString(),
+                        createdIndividualCustomer.getDateOfBirth(),
                         createdIndividualCustomer.getMotherName(),
                         createdIndividualCustomer.getFatherName(),
                         createdIndividualCustomer.getGender());

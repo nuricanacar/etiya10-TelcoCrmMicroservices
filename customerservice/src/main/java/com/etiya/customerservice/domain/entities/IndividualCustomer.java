@@ -30,7 +30,7 @@ public class IndividualCustomer extends Customer {
     private String nationalId;
 
     @Column(name = "dateOfBirth")
-    private LocalDateTime dateOfBirth;
+    private String dateOfBirth;
 
     @Column(name = "motherName")
     private String motherName;
@@ -73,11 +73,11 @@ public class IndividualCustomer extends Customer {
         this.nationalId = nationalId;
     }
 
-    public LocalDateTime getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -105,7 +105,7 @@ public class IndividualCustomer extends Customer {
         this.gender = gender;
     }
 
-    public IndividualCustomer(String firstName, String lastName, String middleName, String nationalId, LocalDateTime dateOfBirth, String motherName, String fatherName, String gender) {
+    public IndividualCustomer(String firstName, String lastName, String middleName, String nationalId, String dateOfBirth, String motherName, String fatherName, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;

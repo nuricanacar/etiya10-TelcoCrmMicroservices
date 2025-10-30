@@ -22,5 +22,6 @@ public interface CustomerSearchService {
     List<CustomerSearch> findByFirstNameUsingFuzzy(String misspelledFirstName);
     List<CustomerSearch> searchWithSmartQuery(String userInput);
 
+    CustomerSearch searchByCustomerId(String customerId);
 
 }

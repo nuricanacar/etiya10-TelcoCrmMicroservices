@@ -21,7 +21,8 @@ public class CreateAddressRequest {
     private String street;
     @NotBlank(message = Messages.HouseNumberRequired)
     private String houseNumber;
-    @Size(max = 255, message = Messages.DescriptionSize)
+    @Size(min = 10, message = Messages.DescriptionSize)
+    @NotBlank(message = Messages.DescriptionRequired)
     private String description;
     private boolean isDefault;
     private int districtId;

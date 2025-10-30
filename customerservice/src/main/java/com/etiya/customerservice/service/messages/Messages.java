@@ -37,7 +37,7 @@ public class Messages {
     public static final String NatIdRequired = "{natId.required}";
     public static final String NatIdSize = "{natId.size}";
     public static final String NatIdPattern =  "{natId.pattern}";
-
+    public static final String DescriptionRequired =  "{description.required}";
 
 
 

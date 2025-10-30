@@ -44,6 +44,7 @@ public class AddressServiceImpl implements AddressService {
     public CreatedAddressResponse add(CreateAddressRequest request) {
         Address address = AddressMapper.INSTANCE.addressFromCreateAddressRequest(request);
         Address createdAddress = addressRepository.save(address);
+        addressBusinessRules.checkIsPrimaryOnlyOne(createdAddress);
         CreateAddressEvent event = new CreateAddressEvent(
                 createdAddress.getId(),
                 createdAddress.getStreet(),

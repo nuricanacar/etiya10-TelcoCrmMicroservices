@@ -7,16 +7,15 @@ public class GetListDistrictResponse {
     private int id;
     private String name;
     private int cityId;
-    private List<Integer> addresses;
+
 
     public GetListDistrictResponse() {
     }
 
-    public GetListDistrictResponse(int id, String name, int cityId, List<Integer> addresses) {
+    public GetListDistrictResponse(int id, String name, int cityId) {
         this.id = id;
         this.name = name;
         this.cityId = cityId;
-        this.addresses = addresses;
     }
 
     public int getId() {
@@ -43,12 +42,6 @@ public class GetListDistrictResponse {
         this.cityId = cityId;
     }
 
-    public List<Integer> getAddresses() {
-        return addresses;
-    }
 
-    public void setAddresses(List<Integer> addresses) {
-        this.addresses = addresses;
-    }
 }
 

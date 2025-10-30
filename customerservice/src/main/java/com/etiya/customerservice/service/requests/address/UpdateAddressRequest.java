@@ -10,7 +10,8 @@ public class UpdateAddressRequest {
     private String street;
     @NotBlank(message = Messages.HouseNumberRequired)
     private String houseNumber;
-    @Size(max = 255, message = Messages.DescriptionSize)
+    @Size(min = 10, message = Messages.DescriptionSize)
+    @NotBlank(message = Messages.DescriptionRequired)
     private String description;
     private Boolean isDefault;
     private int districtId;

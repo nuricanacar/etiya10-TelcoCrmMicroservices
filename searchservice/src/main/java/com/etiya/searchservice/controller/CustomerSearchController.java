@@ -58,5 +58,9 @@ public class CustomerSearchController {
         return customerSearchService.searchWithSmartQuery(userInput);
     }
 
-
+    @GetMapping("findByCustomerId")
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerSearch findByCustomerId(@RequestParam String customerId) {
+        return customerSearchService.searchByCustomerId(customerId);
+    }
 }

@@ -2,6 +2,7 @@ package com.etiya.customerservice.controller;
 
 import com.etiya.customerservice.domain.entities.City;
 import com.etiya.customerservice.service.abstracts.CityService;
+import com.etiya.customerservice.service.responses.city.GetListCityResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class CityController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<City> getAll() {
+    public List<GetListCityResponse> getAll() {
         return cityService.getAll();
     }
 }

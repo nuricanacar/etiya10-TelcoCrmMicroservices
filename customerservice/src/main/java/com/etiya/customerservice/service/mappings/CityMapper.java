@@ -8,6 +8,7 @@ import com.etiya.customerservice.service.responses.city.GetByIdCityResponse;
 import com.etiya.customerservice.service.responses.city.GetListCityResponse;
 import com.etiya.customerservice.service.responses.city.UpdatedCityResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public interface CityMapper {
     CreatedCityResponse createdCityResponseFromCity(City city);
 
     //getlist
-    List<GetListCityResponse> getListCityResponseFromCity(List<City> city);
+
+    List<GetListCityResponse> getListCityResponseFromCity(List<City> cities);
 
     //getbyid
     GetByIdCityResponse getByIdCityResponseFromCity(City city);
